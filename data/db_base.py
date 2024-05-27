@@ -1,7 +1,10 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import MongoClient
-
+from logging import getLogger
 from data.config import *
+
+
+logger = getLogger(__name__)
 
 
 class BaseDB:
@@ -25,14 +28,14 @@ class BaseDB:
             self.db = client[DB_NAME]
             self.collection = self.db[DB_COLLECTION]
         except Exception as e:
-            print(f"Error initializing database: {e}")
+            logger.error(f"Error initializing database: %s", e)
 
     async def find(self):
         try:
             async for document in self.collection.find():
                 yield document
         except Exception as e:
-            print(f"Error fetching documents: {e}")
+            logger.error(f"Error fetching documents: %s", e)
 
 
 async def conn():

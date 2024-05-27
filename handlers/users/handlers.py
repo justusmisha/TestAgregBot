@@ -1,7 +1,10 @@
 from aiogram import types
-from aiogram.types import ReplyKeyboardRemove
+from logging import getLogger
 from loader import dp
 from utils.data_calculator.data_analyzer import DataCalculator
+
+
+logger = getLogger(__name__)
 
 
 @dp.message_handler(lambda message: message.text.startswith('{'))
@@ -11,4 +14,4 @@ async def start(message: types.Message):
         await message.answer(text=await dc.data_calculation())
 
     except Exception as e:
-        print(f"An error occurred while handling /start command: {e}")
+        logger.error(f"An error occurred while handling /start command: %s", e)

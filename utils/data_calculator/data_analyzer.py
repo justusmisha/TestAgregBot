@@ -1,6 +1,9 @@
-import asyncio
 from datetime import datetime, timedelta
 from data.db_base import conn
+from logging import getLogger
+
+
+logger = getLogger(__name__)
 
 
 class DataCalculator:
@@ -36,7 +39,7 @@ class DataCalculator:
                     try:
                         data_sum += i['value']
                     except ValueError:
-                        print('Values not correct')
+                        logger.error('Values not correct')
             result["dataset"].append(data_sum)
             result["labels"].append(current_date.strftime("%Y-%m-%dT%H:%M:%S"))
             current_date = end_date
