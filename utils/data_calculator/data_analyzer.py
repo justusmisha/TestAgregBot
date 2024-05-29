@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 from data.db_base import conn
 from logging import getLogger
@@ -43,7 +44,9 @@ class DataCalculator:
             result["dataset"].append(data_sum)
             result["labels"].append(current_date.strftime("%Y-%m-%dT%H:%M:%S"))
             current_date = end_date
-        return result
+
+        json_result = json.dumps(result)
+        return json_result
 
     def calculate_end_date(self, current_date):
         if self.group_type == "%Y-%m":
